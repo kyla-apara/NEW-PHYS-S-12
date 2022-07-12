@@ -27,23 +27,8 @@ For the simple sensor in my kit I decided to build a flex sensor. I opened ardui
 ![Image of the sensor schematic](./Flex_S.png)
 
 
-After connecting the circuit, I bent the flex sensor at different angles. I recorded the values by using the serial monitor and opened the serial plotter to see what the graph would look like. (For the graph in the tutorial it was reccomended we use the 9600 baud measurement.)
-
-
-![Image of the sensor in real life](./Flex_Sensor.jpg)
-
-![Image of the sensor numerical values](./Flex_Numbers.png)
-
-![Image of the sensor graph](./Flex_Plotter.png)
-
-
-The Lowest Value: 10904.45 Ohms at -45.00 Degrees
-
-The Highest Value: 38504.43 Ohms at 2.00 Degrees
-
-Side Note: The INF Ohms or Infinite Ohms is the Flex Sensors resting/neutral state at -63.00.
-
 Here's the Coding!
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
@@ -104,31 +89,32 @@ void loop()
 </code></pre> 
 
 
+After connecting the circuit, I bent the flex sensor at different angles. I recorded the values by using the serial monitor and opened the serial plotter to see what the graph would look like. (For the graph in the tutorial it was reccomended we use the 9600 baud measurement.)
+
+
+![Image of the sensor in real life](./Flex_Sensor.jpg)
+
+![Image of the sensor numerical values](./Flex_Numbers.png)
+
+![Image of the sensor graph](./Flex_Plotter.png)
+
+
+The Lowest Value: 10904.45 Ohms at -45.00 Degrees
+
+The Highest Value: 38504.43 Ohms at 2.00 Degrees
+
+Side Note: The INF Ohms or Infinite Ohms is the Flex Sensors resting/neutral state at -63.00.
+
+
 ## Building the Capacitive Sensor
 
-For the capacitive sensor I built the transmit - recieve (TX_RX) sensor, by using the hand drawn schematic that was included in our teachers website.
+For the capacitive sensor I built the transmit - recieve (TX_RX) sensor, by using the hand drawn schematic and coding that was included in our teachers website.
 
 
 ![Image of the capacitive sensor schematic](./TX_RX_Sketch.png)
 
 ![Image of the capacitive sensor in real life](./Copper_Sensor.jpg)
 
-
-After building the circuitry I opened the serial monitor and serial plotter to record and graph my data. The order of the number values are as shown where the first picture is its neutral state (not touching), the second picture is the two pieces of copper touching each other, and the last picture is the two pieces of copper being pushed together with my fingers. 
-
-
-![Image of the sensor graph](./Copper_Plotter.png)
-
-![Image of the neutral copper sensor](./Copper_Neutral.png)
-
-![Image of the copper pieces touching](./Copper_Touch.png)
-
-![Image of the copper pieces being pushed together](./Copper_Push.png)
-
-
-The Lowest Value: 91
-
-The Highest Value: 397
 
 Here is the Code!
 
@@ -177,6 +163,23 @@ long tx_rx(){         // Function to execute rx_tx algorithm and return a value
   return sum;
 }                                          // End of tx_rx function.
 </code></pre> 
+
+
+After building the circuitry I opened the serial monitor and serial plotter to record and graph my data. The order of the number values are as shown where the first picture is its neutral state (not touching), the second picture is the two pieces of copper touching each other, and the last picture is the two pieces of copper being pushed together with my fingers. 
+
+
+![Image of the sensor graph](./Copper_Plotter.png)
+
+![Image of the neutral copper sensor](./Copper_Neutral.png)
+
+![Image of the copper pieces touching](./Copper_Touch.png)
+
+![Image of the copper pieces being pushed together](./Copper_Push.png)
+
+
+The Lowest Value: 91
+
+The Highest Value: 397
 
 
 ## The Take Away From Both Sensors
