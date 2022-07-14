@@ -191,9 +191,9 @@ long tx_rx() {        // Function to execute rx_tx algorithm and return a value
  ![GIF of the finished project](./Copper_LED.gif)
 
 
- After getting the input and output devices to work, I then had to create a class. Although my code did not use any delay functions and already had a pre-made class that came with the example, the assignment requirement was to utilize a class of our own. I decided the best way to do this would be to subsitute a button for the copper pieces to turn on the LED and make a class for that button. I used the Arduino Digital Button Example. After multiple attempts at trying to modify/intergrate the code from the LED strip to the button, it was unsuccessful. While I did not get the button to turn on the LED strip (therefore I was not able to create my own class) I definitly learned a couple of tips and became a lot more comfortable when trying to code on Arduino!
+ After getting the input and output devices to work, I then had to create a class. Although my code did not use any delay functions and already had a pre-made class that came with the example, the assignment requirement was to utilize a class of our own. I decided the best way to do this would be to subsitute a button for the copper pieces to turn on the LED and make a class for that button. I used the Arduino Digital Button Example. However, after multiple attempts at trying to modify/intergrate the code from the LED strip to the button, it was unsuccessful. 
 
-Here's my Attempted Code, Alongside my Circuit and Breadboard
+Here's my Attempted Code Alongside my Circuit and Breadboard
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
@@ -243,7 +243,30 @@ void loop() {
 }
 </code></pre> 
 
+While I did not get the button to turn on the LED strip (therefore I was not able to create my own class) I definitly learned a couple of tips and became a lot more comfortable when trying to code on Arduino!
 
+
+## Using the Oscilloscope!
+
+Before I switched to using the button I decided to record the current waveforms that were flowing throughout the project by using the oscilloscope. 
+
+## Designing CAD Models!
+
+The lat part to this assignment was simply designing a cad model (either a 3D STL file or a 2D DXF file) to use for next assignments CNC milling project. I chose one of my trays that I am going to need for my final project! The CNC machiene however, cannot cut the holes where one of the bases of my robot will attach. To deal with this, I will have to use my second robot base or find a way to accurately cut the holes. Here is what both the tray and second robot base look like!
+
+
+![Image of the tray](./Shelf_No_Holes.png)
+
+![Image of the robot base](./Robot_Base_1.png)
+
+For the tray, I started off with a 7 inch or 177.80mm square. I extruded the square by 10mm and began to build up the sides. For each side of the tray, the dimensions for the sketch was 177.80mm in length, 25.4mm in width, and I extruded the sketch by 10mm on all sides. 
+
+![Image of the tray base](./Shelf_Base.png)
+
+![Image of the tray sides](./Shelf_Sides.png)
+
+
+After making the tray I decided to make the robot base that will scoup under the trays. I started off with a 
   Use this to go back to the homepage! [link](../index.html).
 
 
