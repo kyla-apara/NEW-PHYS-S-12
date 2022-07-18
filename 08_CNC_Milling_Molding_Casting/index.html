@@ -14,17 +14,53 @@
 
   # Week 8: CNC Milling, Molding & Casting!
 
-For this weeks assignment we were tasked with designing something and make it using CNC (Computer Numerical Control). We had the option of usingthe ShopBot or Shaper (for 2D outlines), or the SRM-20 (for 2.5D molds). We also had to create something by molding and casting.
+For this weeks assignment we were tasked with designing something and make it using CNC (Computer Numerical Control). We had the option of using the ShopBot or Shaper (for 2D outlines), or the SRM-20 (for 2.5D objects). We also had to create something by molding and casting.
 
 
 ## CNC Milling w/ SRM-20
 
-Originally I had decided to use my designs from Week 7 in order to create a mold for my trays in my final project. I quickly realised that this would be impossible given the size of the tray (7 inches) and the capacity of the SRM-20 (3 inches.) After looking at my options I decided that simply using the ShopBot to cut the tray parts individually from poly carbonate would be my best bet. Additionally, if I wanted to add the previous holes for my other robot model, I could do it with the Shaper. I exported my file as a DXF instead of an STL and took my flashdrive to the ShopBot.
+Originally I had decided to use my designs from Week 7 in order to create a mold for my trays in my final project. I quickly realised that this would be impossible given the size of the tray (7 inches) and the capacity of the SRM-20 (3 inches.) After looking at my options, I decided that molding the wheels for the little robot might be fun as I could continue to reuse the mold. So, I created my mold on fusion 360 an started with a 3 inch/ 76.2mm square.
 
+
+![Image of the starting square](./Mold_Measurements.png)
+
+
+Then, I extruded the mold by 30mm and created a new sketch on the top layer to make a hole for the silicon. I made a 66mm square and dragged the sketch down so it would barely touch the bottom (25mm) Here's the base of the mold.
+
+
+![Image of the square height measurement](./Extrude_S.png)
+
+![Image of the extruded square](./Extruded_Square.png)
+
+![Image of the hollowing measurement](./66mm_Square.png)
+
+![Image of the base mold](./Mold_Case.png)
+
+
+After that was done, I created a new sketch in the middle of the hollowed cube and made a 2.5 inch/ 63.5mm circle in the center, it was extruded by 1 inch and had a 7mm x 4mm x 10cm rectangle in the middle for the motor prong to go into. 
+
+
+![Image of the fusion360 mold](./Old_Mold.png)
+
+
+I then downloaded the file as an <a download href='./Robot_Base.stl'>(stl file)<a> and then took my flashdrive to the wax miller. When I first uploaded it I rotated the image 90 degrees on the X axis and hit the calculate button. I realised that the circle might have been too close to the edge of the square so, to be safe I resized the circle down to 2 inches/ 50.8mm and set the origin to the bottom left corner of the wax block after I had used constructors tape to secure it onto the bed. It was finally ready to mill. 
+
+
+![Image of the mill settings](./New_Settings.jpg)
+
+![Image of the origin settings](./Origin.jpg)
+
+![GIF of the milling](./Wax_Molding.gif)
+
+
+After a painful 45 minutes the mold was finally ready to have silicon into it!
+
+
+![Image of the final wax mold](./Wax_Mold.jpg)
 
 ## Molding & Casting
 
-For the moldng and casting I decdied to create a mold for my wheels that the robot would use.
+
 
   Use this to go back to the homepage! [link](../index.html).
 
