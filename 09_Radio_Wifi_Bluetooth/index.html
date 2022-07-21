@@ -18,15 +18,88 @@ For this weeks assignment, we were tasked with controling a board from a local w
    
 ## Using the ESP32!
 
-I knew I wanted to crete something that would be useful for my final project. I decided that controlling the robot through wifi would be a good addition and so I decided to connect two motors to it. Orginally I started off with one motor and used <a href="http://www.esp32learning.com/code/esp32-and-l9110-fan-module-example.php" target="_blank">this tutorial</a> to create the circuit and gather the code for the ESP32. This part was relativly easy as I have worked with DC Motors before and it was pretty similar to other microcontrollers. 
+I knew I wanted to crete something that would be useful for my final project. I decided that controlling the robot through wifi would be a good addition and so I connected the two motors to it. Orginally I started off with one motor and used <a href="http://www.esp32learning.com/code/esp32-and-l9110-fan-module-example.php" target="_blank">this tutorial</a> to create the circuit and gather the code for the ESP32. This part was relativly easy as I have worked with DC Motors before and it was pretty similar to other microcontrollers where I changed the direction of them. Here was the result for the first test of the ESP32 just to make sure the connection was fine. 
 
 
 ![Image of the circuit schematic](./Circuit_S.png)
 
-<video width="240" height="320" controls>
+<video width="1080" height="1920" controls>
+  <source src="One_Motor_One_D.mp4" type="video/mp4">
+
+
+Once I tested the code, I then decided to input my previous turning pattern code from Week 4 where the motor would turn forwards and backwards (Check week 4 for the specific code!) I also added a second motor by copying and pasting the same code but setting different input pins for Motor B. However, because of this instead of the motors rotating together in sync, they operated one after the other. 
+
+
+<video width="1080" height="1920" controls>
   <source src="Chrono.mp4" type="video/mp4">
 
-Once I tested the code I then decided to input my previous turning pattern code from Week 4 where the motor would turn forwards and backwards! Check week 
+
+To fix this mistake I simply combined the code into the same sections and it happened to work!
+
+
+<video width="1080" height="1920" controls>
+  <source src="Sync.mp4" type="video/mp4">
+
+
+After getting the two motors to work at the same time, I knw that I would want my robot to be able to turn. I learned the easist way to do this was by having one wheel spin in one continuous direction while having the other one rotate the other way. I simple switched the outputs for Motor B from LOW to HIGH and vise versa for one spinning cycle and had Motor A continue spinning in the right direction. Here was the result, along with the code!
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script> 
+
+
+<pre><code class="language-arduino">
+int INAA = 2;
+int INAB = 15;
+int INBA = 12;
+int INBB = 13;
+void setup()
+{
+pinMode(INAA,OUTPUT);
+pinMode(INAB,OUTPUT);
+pinMode(INBA,OUTPUT);
+pinMode(INBB,OUTPUT);
+}
+ 
+void loop()
+{
+  // start the motors
+digitalWrite(INAA,LOW);
+digitalWrite(INAB,HIGH);
+digitalWrite(INBA,LOW);
+digitalWrite(INBB,HIGH);
+delay(5000);
+
+// stop the motors
+  digitalWrite(INAA, LOW);   
+  digitalWrite(INAB, LOW);
+  digitalWrite(INBA, LOW);  
+  digitalWrite(INBB, LOW);
+  delay(2000);     
+      
+// start one motor opposite direction
+  digitalWrite(INAA, LOW); 
+  digitalWrite(INAB, HIGH);  
+  digitalWrite(INBA,HIGH);
+  digitalWrite(INBB,LOW);
+  delay(3000);              
+
+ // stop the motors
+  digitalWrite(INAA, LOW);   
+  digitalWrite(INAB, LOW);
+  digitalWrite(INBA, LOW);   
+  digitalWrite(INBB, LOW);
+  delay(2000);   
+  
+}
+  </code></pre> 
+
+
+<video width="1080" height="1920" controls>
+  <source src="Different_Directions.mp4" type="video/mp4">
+
 
   Use this to go back to the homepage! [link](../index.html).
 
