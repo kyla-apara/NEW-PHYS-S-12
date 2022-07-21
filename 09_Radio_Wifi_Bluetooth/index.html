@@ -18,7 +18,7 @@ For this weeks assignment, we were tasked with controling a board from a local w
    
 ## Using the ESP32!
 
-I knew I wanted to crete something that would be useful for my final project. I decided that controlling the robot through wifi would be a good addition and so I connected the two motors to it. Orginally I started off with one motor and used <a href="http://www.esp32learning.com/code/esp32-and-l9110-fan-module-example.php" target="_blank">this tutorial</a> to create the circuit and gather the code for the ESP32. This part was relativly easy as I have worked with DC Motors before and it was pretty similar to other microcontrollers where I changed the direction of them. Here was the result for the first test of the ESP32 just to make sure the connection was fine. 
+I knew I wanted to crete something that would be useful for my final project. I decided that controlling the robot through wifi would be a good addition and so I connected the two motors to it. Orginally I started off with one motor and used <a href="http://www.esp32learning.com/code/esp32-and-l9110-fan-module-example.php" target="_blank">this tutorial</a> to create the circuit and gather the code for the ESP32 (You must right click on the blank space and open the image in a new tab to see the circuit schematic). This part was relativly easy as I have worked with DC Motors before and it was pretty similar to other microcontrollers where I changed the direction of them. Here was the result for the first test of the ESP32 just to make sure the connection was fine. 
 
 
 ![Image of the circuit schematic](./Circuit_S.png)
@@ -27,7 +27,7 @@ I knew I wanted to crete something that would be useful for my final project. I 
   <source src="One_Motor_One_D.mp4" type="video/mp4">
 
 
-Once I tested the code, I then decided to input my previous turning pattern code from Week 4 where the motor would turn forwards and backwards (Check week 4 for the specific code!) I also added a second motor by copying and pasting the same code but setting different input pins for Motor B. However, because of this instead of the motors rotating together in sync, they operated one after the other.
+Once I tested the code, I then decided to input my previous turning pattern code from Week 4 where the motor would turn forwards and backwards (Check week 4 for the specific code!) I also added a second motor by copying and pasting the same code but setting different input pins for Motor B. However, because the code was seperated, instead of the two motors rotating together in sync, they operated one after the other.
 
 
 <video width="540" height="960" controls>
@@ -41,7 +41,7 @@ Once I tested the code, I then decided to input my previous turning pattern code
   <source src="Sync.mp4" type="video/mp4">
 
 
-After getting the two motors to work at the same time, I knw that I would want my robot to be able to turn. I learned the easist way to do this was by having one wheel spin in one continuous direction while having the other one rotate the other way. I simple switched the outputs for Motor B from LOW to HIGH and vise versa for one spinning cycle and had Motor A continue spinning in the right direction. Here was the result, along with the code!
+After getting the two motors to work at the same time, I knew that I would want my robot to be able to turn. I learned the easiest way to do this was by having one wheel spin in one continuous direction while having the other one rotate the other way. I simple switched the outputs for Motor B from LOW to HIGH and vise versa for one spinning cycle and had Motor A continue spinning in the right direction. Here was the result, along with the code!
 
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
@@ -110,7 +110,7 @@ I also added wheels to the motors to see what it would look like while changing 
 
 ## Simple Wifi Server
 
-To start off the requirements for this assignmnt and acatually get to the wifi connections part, after getting familiar with setting up the ESP32, I followed the tutorial provided by my teacher on how to use the Simple Wifi Server Library that I downloaded from the ESP32 examples. I started off by modifying the code by intergrading the motor code from above into the template provided, which was initailly about turning on a LED. 
+To start off the requirements for this assignmnt and acatually get to the wifi connections part, after getting familiar with setting up the ESP32 I followed the tutorial provided by my teacher on how to use the Simple Wifi Server Library that I downloaded from the ESP32 examples. I started off by modifying the code by intergrading the motor code from above into the template provided, which was initailly about turning on a LED. The main thing I changed was the if statements, where I pasted most of my code.
 
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
@@ -265,11 +265,121 @@ delay(5000);
   </code></pre> 
 
 
-For a while I had a hard time seeing where to control the motors. You are supposed to control them through the server created when putting the IP Address that is displayed in the serial moniter. I realised quickly and remembered that when trying to see it, you must be connected tot he same wifi connection as the ESP32. From there, simply click the link to turn the motors on and off!
+For a while I had a hard time seeing where to control the motors from. You are supposed to control them through the server created when putting the IP Address that is displayed in the serial moniter. However, I realised quickly and remembered that when trying to see it, you must be connected tot he same wifi connection as the ESP32. From there, I simply click the link to turn the motors on and off!
 
 
 <video width="540" height="960" controls>
   <source src="Click_Here.mp4" type="video/mp4">
+
+## Firebase Tutorial
+
+After getting the Simple Wifi Server up and running, I decided to take a look into the Firebase platform that we were reccommended. I set up a new Firebase Project named ESP32 Firebase Motor, and created a new account. From there, linked on my teachers website we learned how to nagivate through Firebase and its Realtime Database, along with the information we need to start connecting Firebase to the ESP32.
+
+Here was my modified code!
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script> 
+
+
+<pre><code class="language-arduino">
+ #include <WiFi.h>                                 // esp32 library
+#include <FirebaseESP32.h>                        // firebase library
+
+#define FIREBASE_HOST "https://esp32-firebase-moter-default-rtdb.firebaseio.com/"  // the project name address from firebase id
+#define FIREBASE_AUTH "hFfWgRRVbHWzPVuq9V2jP9B0LkcVcHvfJkDGRqVe"                                // the secret key generated from firebase
+#define WIFI_SSID "MAKERSPACE"                                    // input your home or public wifi name
+#define WIFI_PASSWORD "12345678"                                // password of wifi ssid
+
+String fireString = "Motor Status Recieved";                                          // led status received from firebase
+int INAA = 2;
+int INAB = 15;
+int INBA = 12;
+int INBB = 13;
+
+//Define FirebaseESP32 data object
+FirebaseData firebaseData;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(INAA,OUTPUT);
+   pinMode(INAB,OUTPUT);
+   pinMode(INBA,OUTPUT);
+   pinMode(INBB,OUTPUT);
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);                          // try to connect with wifi
+
+  Serial.print("Connecting to ");
+  Serial.print(WIFI_SSID);
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(500);
+  }
+
+  Serial.println();
+  Serial.print("Connected to ");
+  Serial.println(WIFI_SSID);
+  Serial.print("IP Address is : ");
+  Serial.println(WiFi.localIP());                                // print local IP address
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);                  // connect to firebase
+  Firebase.reconnectWiFi(true);
+  Firebase.set(firebaseData, "/MOTOR_STATUS", "OFF");              // set initial string of "OFF"
+}
+
+void loop() {
+
+  Firebase.get(firebaseData, "/MOTOR_STATUS");                     // get led status input from firebase
+  fireString = firebaseData.stringData();                        // change to e.g. intData() or boolData()
+  Serial.println(fireString);
+
+  if (fireString == "ON") {                    // compare the input of led status received from firebase
+    Serial.println("Motor Turned ON");
+    
+   // start the motors
+digitalWrite(INAA,LOW);
+digitalWrite(INAB,HIGH);
+digitalWrite(INBA,LOW);
+digitalWrite(INBB,HIGH);
+delay(5000);
+
+// stop the motors
+  digitalWrite(INAA, LOW);   
+  digitalWrite(INAB, LOW);
+  digitalWrite(INBA, LOW);  
+  digitalWrite(INBB, LOW);
+  delay(2000);     
+      
+// start one motor opposite direction
+  digitalWrite(INAA, LOW); 
+  digitalWrite(INAB, HIGH);  
+  digitalWrite(INBA,HIGH);
+  digitalWrite(INBB,LOW);
+  delay(3000);              
+
+ // stop the motors
+  digitalWrite(INAA, LOW);   
+  digitalWrite(INAB, LOW);
+  digitalWrite(INBA, LOW);   
+  digitalWrite(INBB, LOW);
+  delay(2000);   
+  }
+
+  else if (fireString == "OFF") {              // compare the input of led status received from firebase
+    Serial.println("MotorTurned OFF");
+  digitalWrite(INAA, LOW);   
+  digitalWrite(INAB, LOW);
+  digitalWrite(INBA, LOW);   
+  digitalWrite(INBB, LOW);
+  delay(2000);           
+  }
+
+  else {
+    Serial.println("Please send ON/OFF");
+  }
+
+  delay(1000);                                 // not strictly necessary
+}
+  </code></pre> 
 
 
   Use this to go back to the homepage! [link](../index.html).
