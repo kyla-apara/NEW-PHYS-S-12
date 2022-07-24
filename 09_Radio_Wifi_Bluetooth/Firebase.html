@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PHYSCI 70: Introduction to Digital Fabrication</title>
+    <title>PHYS-S -12: Introduction to Digital Fabrication</title>
 </head>
 
 <body>
@@ -23,10 +23,10 @@
     var firebaseConfig = {
         apiKey: "REPLACE_WITH_YOUR_OWN",
         authDomain: "REPLACE_WITH_YOUR_OWN",
-        databaseURL: "REPLACE_WITH_YOUR_OWN",
-        projectId: "REPLACE_WITH_YOUR_OWN",
+        databaseURL: "esp32-firebase-moter-default-rtdb",
+        projectId: "esp32-firebase-moter",
         storageBucket: "REPLACE_WITH_YOUR_OWN",
-        messagingSenderId: "REPLACE_WITH_YOUR_OWN",
+        messagingSenderId: "543481842809",
         appId: "REPLACE_WITH_YOUR_OWN"
     };
 
@@ -43,14 +43,14 @@
     function turnOn(){
         console.log("turning on");
         ref.update({
-            "LED_STATUS": "ON"
+            "MOTOR_STATUS": "ON"
         });
     }
 
     function turnOff(){
         console.log("turning off");
         ref.update({
-            "LED_STATUS": "OFF"
+            "MOTOR_STATUS": "OFF"
         });
     }
     </script>
