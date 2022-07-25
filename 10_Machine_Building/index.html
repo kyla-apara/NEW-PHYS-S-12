@@ -11,7 +11,6 @@
 <xmp theme="journal" style="display:none;">
 
 
-
   # Week 10: Machine Building & End Effectors
 
   As the program comes to the end, our last new assignment is Machine Building! The assignment description was to make a machine that includes at least one stepper motor, and demonstrate that we can calibrate the motor's starting position. I decided I could incorperate this into my final project and developed prototype through trial and error.
@@ -64,6 +63,16 @@ Heres the prototype:
 
 
 ## Step Motors!
+In class we had previously learned about how step motors work, what they are sued for and their pros and cons. We figured out how to wire them based on which motor driver you were using (mine was the STSPIN220.) After wiring it with the help of the schematic from <a href="https://www.pololu.com/product/2876" target="_blank">this tutorial</a> and we tested the code provided by our teacher.
+
+
+![Image of the circuit schematic](./Step_Circuit.png)
+
+![Image of the circuitry](./Step_Circuit.jpg)
+
+<video width="540" height="960" controls>
+  <source src="Slow_Circle.mp4" type="video/mp4">
+
 After creating the prototype the only thing left to do was attach the step motor to the side of the scoop with string. I used tape to secure the motor down as this is still my prototype and I would like to rebuild it. I coded the motor so it would turn in one diretion then wait for a long time and eventually spin the other way. I plan to use some of this in my final project but have some sort of pressure sensor so the motor lifts up and down once the presure from the tray is sensed. For now here's the code (which I also got help from <a href="https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/" target="_blank">this tutorial)</a> and the full build!
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
