@@ -13,7 +13,7 @@
 
   # Week 10: Machine Building & End Effectors
 
-  As the program comes to the end, our last new assignment is Machine Building! The assignment description was to make a machine that includes at least one stepper motor, and demonstrate that we can calibrate the motor's starting position. I decided I could incorperate this into my final project and developed prototype through trial and error.
+  As the program comes to the end, our last new assignment is Machine Building! The assignment description was to make a machine that includes at least one stepper motor, and demonstrate that we can calibrate the motor. I decided I could incorperate this into my final project and developed prototype through trial and error.
    
 ## Building the Prototype
 
@@ -123,6 +123,64 @@ for(int x = 0; x < stepsPerRevolution; x++)
 
 <video width="960" height="540" controls>
   <source src="Up_Down.mp4" type="video/mp4">
+
+
+## Calibration
+For the second half of the assignment, we were tasked thinking about homing our projects and how we will know the home position. In my case, the motor stops after the second rotation which is the home state. The string pulls the scoup up so it can support the weight of the tray and objects on the tray, it unravels or rotates the other way after it is done so I am not really sure how I could incorperate the home state. However, while messing around with code, I made a cool discovery of how to include stops and percision movement to the step motor by only having to add 2 lines of code!
+
+Here's the Code!
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script> 
+
+
+<pre><code class="language-arduino">
+#include <AccelStepper.h>
+
+const int stepPin = 3;
+const int dirPin = 4;
+const int stepsPerRevolution = 350;
+
+AccelStepper stepper(1, stepPin, dirPin);
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(stepPin, OUTPUT);
+  pinMode(dirPin, OUTPUT);
+  stepper.moveTo(200);
+  delay(2000);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+    digitalWrite(dirPin, HIGH);
+for(int x = 0; x < stepsPerRevolution; x++)
+  {
+  digitalWrite(stepPin, HIGH);
+  delay(5);
+  digitalWrite(stepPin, LOW);
+  delay(5);
+}
+ delay(1500);
+ digitalWrite(dirPin, LOW);
+
+
+  for(int x = 0; x < stepsPerRevolution; x++)
+  {
+  digitalWrite(stepPin, HIGH);
+  delay(5);
+  digitalWrite(stepPin, LOW);
+  delay(5);
+  }
+  delay(1500);
+}
+  </code></pre> 
+  
+<video width="960" height="540" controls>
+  <source src="Calibrate.mp4" type="video/mp4">
+
 
 
  Use this to go back to the homepage! [link](../index.html).
