@@ -4,34 +4,34 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PHYS-S -12: Introduction to Digital Fabrication</title>
+    <title>PHYS S-12: Introduction to Digital Fabrication</title>
 </head>
 
 <body>
-    <button id="turn-on" name="turnon">Turn On </button>
-    <button id="turn-off" name="turnoff">Turn Off </button>
+
+     <button id="turn-on" name="turnon">Turn On</button>
+     <button id="turn-off" name="turnoff">Turn Off</button>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script&gt;
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
          https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script&gt;
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-database.js"></script>
 
     <script>
     // Your web app's Firebase configuration
-    var firebaseConfig = {
-        apiKey: "REPLACE_WITH_YOUR_OWN",
-        authDomain: "REPLACE_WITH_YOUR_OWN",
-        databaseURL: "esp32-firebase-moter-default-rtdb",
-        projectId: "esp32-firebase-moter",
-        storageBucket: "REPLACE_WITH_YOUR_OWN",
-        messagingSenderId: "543481842809",
-        appId: "REPLACE_WITH_YOUR_OWN"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    const firebaseConfig = {
+  apiKey: "AIzaSyCoa2jY0igKnBtBevWJgV9hcywm72peapY",
+  authDomain: "esp32-firebase-moter.firebaseapp.com",
+  databaseURL: "https://esp32-firebase-moter-default-rtdb.firebaseio.com",
+  projectId: "esp32-firebase-moter",
+  storageBucket: "esp32-firebase-moter.appspot.com",
+  messagingSenderId: "543481842809",
+  appId: "1:543481842809:web:41f535ed2db4fd08a5d8a8"
+};
+        // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
 
     // Get a database reference to our blog
     var ref = firebase.database().ref("/");
@@ -52,7 +52,7 @@
         ref.update({
             "MOTOR_STATUS": "OFF"
         });
-    }
-    </script>
+    }    
+</script>
 
 </body>
