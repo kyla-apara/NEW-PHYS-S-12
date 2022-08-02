@@ -86,10 +86,6 @@ By using Fusion360 I designed and combined models to get a better look at what I
 When I opened Prusa Slicer for the 3D Printer, I realised that the model for the scoup was too big. For this reason, I scaled the entire project down by 70% and then gathered more cardboard for the second prototype. The differnce in this prototype was the addtion of hinges where the hot glue was (because my actual scoup is 3D Printed and not carboard so it is not flexible) and the shape of the casing for my circuitry. I decided to enclose the wiring with rectangle pieces instead of square ones as the first protoype looked awkward. 
 
 
-I also began to edit my previous code as it was stacked with delay functions and did not have the most effcent layout, I combined a simple server template (provided by my teacher) and a series of commands for my motors that would control the wheels. 
-
-
-
 I still printed out my scoup whille building the resized protype. I got my finished scoup and lasercut and hot glue acrylic in order to make my tray.
 
 
@@ -110,17 +106,199 @@ After that was done I cut out 5, 142.24mm (5.6in) x 88.9mm (3.5in) rectangles an
 <video width="540" height="960" controls>
   <source src="Pro2.mp4" type="video/mp4">
 
-After this test run I decided to two more sets of wheels with another motor driver and it would make my robot alot more stable. I also taped down my circuitry, breadboard, and 5V powerbank and glued string to the cardboard, that was in place of my scoup, to the top of the robot as it would subsitute my sevo motors while doing more test runs. 
+After this test run, I decided to two more sets of wheels with another motor driver and it would make my robot alot more stable. I also taped down my circuitry, breadboard, and 5V powerbank and glued string to the cardboard, that was in place of my scoup, to the top of the robot as it would subsitute my sevo motors while doing more test runs. 
 
 
 ![Image of more wheels](./Prototype2.jpg)
 
 ![Image of the circuits](./Circuits.jpg)
 
+Specifically, I edited my previous code as it was stacked with delay functions in a single button and did not have the most effcent layout. I combined a simple server template (provided by my teacher) and a series of commands for my motors that would control the wheels. This code allows me to click on one button for one function, and while it means the robot is not longer autonomous, I think this solution was better than the last. 
 
 
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script> 
 
-## The Final Model!
+
+<pre><code class="language-arduino">
+
+#include <WiFi.h> 
+WiFiServer server(80);
+#include <ESP32Servo.h>
+Servo myservo;
+Servo myservo2;
+
+const char* ssid     = "SSID";
+const char* password = "PASSWORD";
+int INAA = 2;
+int INAB = 15;
+int INBA = 12;
+int INBB = 13;
+int IN2AA = 27;
+int IN2AB = 14;
+int IN2BA = 4;
+int IN2BB = 25;
+
+
+void setup()
+{
+    Serial.begin(115200);
+   pinMode(INAA,OUTPUT);
+   pinMode(INAB,OUTPUT);
+   pinMode(INBA,OUTPUT);
+   pinMode(INBB,OUTPUT);
+   pinMode(IN2AA,OUTPUT);
+   pinMode(IN2AB,OUTPUT);
+   pinMode(IN2BA,OUTPUT);
+   pinMode(IN2BB,OUTPUT);
+   myservo.attach(32); 
+   myservo2.attach(33);
+
+    // We start by connecting to a WiFi network
+
+    Serial.println();
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+
+    WiFi.begin(ssid, password);
+
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    Serial.println("");
+    Serial.println("WiFi connected.");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+
+    server.begin();
+
+}
+
+int value = 0;
+
+void loop(){
+ WiFiClient client = server.available();   // listen for incoming clients
+
+  if (client) {                             // if you get a client,
+    Serial.println("New Client.");           // print a message out the serial port
+    String currentLine = "";                // make a String to hold incoming data from the client
+    while (client.connected()) {            // loop while the client's connected
+      if (client.available()) {             // if there's bytes to read from the client,
+        char c = client.read();             // read a byte, then
+        Serial.write(c);                    // print it out the serial monitor
+        if (c == '\n') {                    // if the byte is a newline character
+
+          // if the current line is blank, you got two newline characters in a row.
+          // that's the end of the client HTTP request, so send a response:
+          if (currentLine.length() == 0) {
+            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+            // and a content-type so the client knows what's coming, then a blank line:
+            client.println("HTTP/1.1 200 OK");
+            client.println("Content-type:text/html");
+            client.println();
+
+            // the content of the HTTP response follows the header:
+            client.print("Click <a href=\"/F\">here</a> to turn the robot forwards.<br>");
+            client.print("Click <a href=\"/B\">here</a> to turn the robot backwards.<br>");
+            client.print("Click <a href=\"/O\">here</a> to turn the robot off <br>");
+            client.print("Click <a href=\"/S\">here</a> to turn the robot scoup up.<br>");
+            client.print("Click <a href=\"/D\">here</a> to turn the robot scoup down.<br>");
+            client.print("Click <a href=\"/T\">here</a> to make the robot spin.<br>");
+            // The HTTP response ends with another blank line:
+            client.println();
+            // break out of the while loop:
+            break;
+          } else {    // if you got a newline, then clear currentLine:
+            currentLine = "";
+          }
+        } else if (c != '\r') {  // if you got anything else but a carriage return character,
+          currentLine += c;      // add it to the end of the currentLine
+        }
+
+        // Check to see if the client request was "GET /H" or "GET /L":
+
+        if (currentLine.endsWith("GET /B")) {
+  
+{
+digitalWrite(INAA,HIGH);
+digitalWrite(INAB,LOW);
+digitalWrite(INBA,HIGH);
+digitalWrite(INBB,LOW);
+digitalWrite(IN2AA,LOW);
+digitalWrite(IN2AB,HIGH);
+digitalWrite(IN2BA,LOW);
+digitalWrite(IN2BB,HIGH);
+}
+}
+        }
+        
+        if (currentLine.endsWith("GET /F")) {
+{
+  digitalWrite(INAA,LOW);
+digitalWrite(INAB,HIGH);
+digitalWrite(INBA,LOW);
+digitalWrite(INBB,HIGH);
+digitalWrite(IN2AA,HIGH);
+digitalWrite(IN2AB,LOW);
+digitalWrite(IN2BA,HIGH);
+digitalWrite(IN2BB,LOW);
+}
+        }
+
+    if (currentLine.endsWith("GET /O")) {
+{
+  digitalWrite(INAA, LOW);   
+  digitalWrite(INAB, LOW);
+  digitalWrite(INBA, LOW);  
+  digitalWrite(INBB, LOW);
+  digitalWrite(IN2AA, LOW);   
+  digitalWrite(IN2AB, LOW);
+  digitalWrite(IN2BA, LOW);  
+  digitalWrite(IN2BB, LOW);
+        }
+      }
+      
+    if (currentLine.endsWith("GET /S")) {
+{
+  myservo.write(160);
+  myservo2.write(150);
+        }
+        }
+          if (currentLine.endsWith("GET /D")) {
+{
+  myservo.write(73);
+  myservo2.write(17);
+        }
+        }
+          if (currentLine.endsWith("GET /T")) {
+{
+  digitalWrite(INAA,LOW); 
+  digitalWrite(INAB,HIGH);  
+  digitalWrite(INBA,HIGH);
+  digitalWrite(INBB,LOW);
+  digitalWrite(IN2AA,HIGH); 
+  digitalWrite(IN2AB,LOW);  
+  digitalWrite(IN2BA,LOW);
+  digitalWrite(IN2BB,HIGH);
+  
+        }
+        }
+      }
+    }
+    // close the connection:
+    client.stop();
+    Serial.println("Client Disconnected.");
+  }
+  </code></pre> 
+
+After the code was done I decicded to deconstruct this prototype and rebuild my real final model.
+
+## Building the Final Model!
 
 
 
